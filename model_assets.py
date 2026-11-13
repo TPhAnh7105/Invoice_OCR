@@ -119,7 +119,7 @@ def prepare_model_assets(project, *, allow_download=True):
         ("weights/bert_weight.pth", WEIGHT_IDS["phobert_mcocr"], "torch"),
         ("configs/detection/configs.yaml", f"{RAW_BASE}/tool/config/detection/configs.yaml", "text"),
         ("configs/ocr/configs.yaml", f"{RAW_BASE}/tool/config/ocr/configs.yaml", "text"),
-        ("heuristic/custom-dictionary.csv", f"{RAW_BASE}/modules/retrieval/heuristic/custom-dictionary.csv", "csv"),
+        ("data/heuristic/custom-dictionary.csv", f"{RAW_BASE}/modules/retrieval/heuristic/custom-dictionary.csv", "csv"),
     ]
     for name in (
         "base.yml", "vgg-transformer.yml", "resnet-transformer.yml",

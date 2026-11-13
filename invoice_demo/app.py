@@ -195,7 +195,7 @@ def create_app(*, engine=None, data_dir=None):
 
     @app.get("/api/sample")
     def sample():
-        for directory in (ROOT / "val_images/val_images", ROOT / "val_images"):
+        for directory in (ROOT / "data/val_images/val_images", ROOT / "data/val_images"):
             path = directory / "mcocr_val_145114gpkup.jpg"
             if path.is_file():
                 return FileResponse(path, media_type="image/jpeg")

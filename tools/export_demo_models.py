@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CELLS = json.loads((ROOT / "invoice-ocr-with-metrics.ipynb").read_text(encoding="utf-8"))["cells"]
+CELLS = json.loads((ROOT / "notebooks/invoice-ocr-with-metrics.ipynb").read_text(encoding="utf-8"))["cells"]
 TARGET = ROOT / "invoice_demo" / "models"
 
 

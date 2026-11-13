@@ -29,7 +29,7 @@ def edit_distance(a, b):
     return prev[-1]
 
 def evaluate_subset(num_samples=50, seed=42):
-    csv_path = ROOT / "mcocr_train_df.csv"
+    csv_path = ROOT / "data/mcocr_train_df.csv"
     with open(csv_path, encoding="utf-8") as f:
         reader = csv.DictReader(f)
         all_rows = [r for r in reader if r.get("anno_texts") and r.get("anno_labels")]
@@ -47,9 +47,9 @@ def evaluate_subset(num_samples=50, seed=42):
     
     for idx, row in enumerate(sample_rows):
         img_id = row["img_id"]
-        img_path = ROOT / "train_images/train_images" / img_id
+        img_path = ROOT / "data/train_images/train_images" / img_id
         if not img_path.is_file():
-            img_path = ROOT / "train_images" / img_id
+            img_path = ROOT / "data/train_images" / img_id
         if not img_path.is_file():
             continue
 

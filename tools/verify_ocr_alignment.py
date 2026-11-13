@@ -11,7 +11,7 @@ from invoice_demo.engine import InvoiceEngine
 engine = InvoiceEngine()
 out = ROOT / 'output/fastapi_demo/alignment_review'
 out.mkdir(exist_ok=True)
-images = [ROOT / 'output/fastapi_demo/21e1d59e-d25c-440c-acb7-3707d4b52f3e/image.jpg', ROOT / 'val_images/val_images/mcocr_val_145114gpkup.jpg']
+images = [ROOT / 'output/fastapi_demo/21e1d59e-d25c-440c-acb7-3707d4b52f3e/image.jpg', ROOT / 'data/val_images/val_images/mcocr_val_145114gpkup.jpg']
 for index, path in enumerate(images):
     result = engine.process(path, lambda stage, percent, message, **extra: print(index, stage, percent, flush=True))
     (out / f'result-{index}.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')

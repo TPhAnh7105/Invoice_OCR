@@ -52,7 +52,7 @@ SELLER_DISQUALIFIERS = [
 
 STORE_DICT = set()
 try:
-    dict_file = ROOT / "heuristic/custom-dictionary.csv"
+    dict_file = ROOT / "data/heuristic/custom-dictionary.csv"
     if dict_file.is_file():
         import csv
         with open(dict_file, encoding="utf-8") as _df:
