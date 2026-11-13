@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174d3c">
+  <title>Invoice Studio · Đọc hóa đơn</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23174d3c'/%3E%3Cpath d='M12 9h16v23l-4-2-4 2-4-2-4 2Z' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M16 16h8m-8 5h8' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v19l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6M9 16h3"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M3 12h18M8 8h8M8 16h5"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></symbol>
+</defs></svg>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Invoice Studio, trang chủ"><span class="brand-icon"><svg><use href="#i-receipt"/></svg></span>invoice<span class="brand-light">studio</span><span class="demo-pill">DEMO</span></a>
+  <div class="local-status"><span class="status-dot"></span> Không gian xử lý cục bộ</div>
+</header>
+<main>
+  <section class="intro">
+    <div><div class="eyebrow"><span></span> TỪ HÌNH ẢNH ĐẾN DỮ LIỆU</div><h1>Hóa đơn rõ ràng.<br><span>Dữ liệu sẵn sàng.</span></h1><p>Tải ảnh hóa đơn, kiểm tra thông tin nhận dạng<br class="desktop-br"> và mang kết quả vào Excel chỉ trong một luồng.</p></div>
+    <div class="intro-note"><span class="note-number">01 — 03</span><div><span>Tải ảnh</span><svg><use href="#i-arrow"/></svg><span>Đọc & kiểm tra</span><svg><use href="#i-arrow"/></svg><span>Xuất Excel</span></div><p>Một ảnh. Bốn trường thông tin.</p></div>
+  </section>
+
+  <div id="error" class="error-banner" role="alert" hidden></div>
+
+  <section id="history-section" class="history-section" aria-label="Lịch sử hóa đơn" hidden>
+    <div class="history-heading">
+      <div class="history-title">
+        <svg><use href="#i-history"/></svg>
+        <span>LỊCH SỬ HÓA ĐƠN</span>
+        <span id="history-count" class="history-count">0</span>
+      </div>
+      <span class="history-hint">Bấm vào hóa đơn bất kỳ để xem lại ảnh và kết quả</span>
+    </div>
+    <div id="history-list" class="history-list" role="list"></div>
+  </section>
+
+  <section class="workspace" aria-label="Không gian đọc hóa đơn">
+    <div class="image-panel">
+      <div class="panel-heading"><div class="panel-title"><span class="step">01</span><h2>Ảnh hóa đơn</h2></div><button id="change-file" class="text-button" type="button" disabled>Đổi ảnh <svg><use href="#i-upload"/></svg></button></div>
+      <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/bmp,image/tiff,.tif,.tiff" hidden>
+      <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Chọn hoặc kéo thả ảnh hóa đơn">
+        <div class="receipt-art" aria-hidden="true"><div class="art-square square-one"></div><div class="art-square square-two"></div><div class="paper"><svg class="paper-icon"><use href="#i-receipt"/></svg><span class="paper-line long"></span><span class="paper-line short"></span><div class="paper-divider"></div><span class="paper-line"></span><span class="paper-line"></span><div class="paper-total"><span></span><b>₫</b></div></div><div class="art-badge"><svg><use href="#i-scan"/></svg></div></div>
+        <h3>Đưa hóa đơn của bạn vào đây</h3><p>Kéo thả ảnh hoặc chọn từ máy tính.<br>Hệ thống bắt đầu đọc ngay khi bạn tải lên.</p>
+        <button id="pick-file" class="button primary" type="button"><svg><use href="#i-upload"/></svg> Chọn ảnh hóa đơn</button>
+        <div class="file-formats">JPG, PNG, WEBP, BMP, TIFF <span>·</span> Tối đa 15 MB</div>
+      </div>
+      <div id="viewer" class="viewer" hidden>
+        <div class="viewer-toolbar"><span id="image-meta">Ảnh gốc</span><div><select id="box-scope" aria-label="Phạm vi khung"><option value="fields">Các trường đã chọn</option><option value="all">Mọi vùng OCR</option></select><label class="box-toggle"><input id="show-boxes" type="checkbox" checked> Khung</label><button id="expand" class="icon-button" title="Xem ảnh lớn" aria-label="Xem ảnh lớn"><svg><use href="#i-expand"/></svg></button></div></div>
+        <div class="image-scroll" id="image-scroll"><div class="image-stage" id="image-stage"><img id="receipt-image" alt="Ảnh hóa đơn đã tải lên"><svg id="overlay" xmlns="http://www.w3.org/2000/svg" aria-label="Các vùng thông tin trên hóa đơn"></svg></div></div>
+        <div class="image-caption"><svg><use href="#i-image"/></svg><span id="filename"></span><span id="region-count"></span></div>
+      </div>
+      <div class="sample-strip"><div><svg><use href="#i-receipt"/></svg><span>Chưa có ảnh để thử?</span></div><button id="sample-button" class="text-button">Dùng hóa đơn mẫu <svg><use href="#i-arrow"/></svg></button></div>
+    </div>
+
+    <div class="result-panel">
+      <div class="panel-heading"><div class="panel-title"><span class="step">02</span><h2>Thông tin nhận dạng</h2></div><div style="display:flex;gap:8px;align-items:center;"><span id="overall-confidence-badge" class="result-badge overall-conf-badge" hidden>ĐỘ TIN CẬY: 0%</span><span id="result-badge" class="result-badge">ĐANG CHỜ ẢNH</span></div></div>
+      <div class="result-intro"><p>Bốn trường quan trọng, ở cùng một nơi.</p><span>Chọn từng trường để xem vùng tương ứng trên ảnh.</span></div>
+      <div id="progress-area" class="progress-area" hidden aria-live="polite"><div class="progress-heading"><span id="progress-message">Đang tải ảnh…</span><span id="progress-value">0%</span></div><div class="progress-track"><div id="progress-bar"></div></div><div id="stage-list" class="stage-list"><span data-stage="detecting">Tìm vùng chữ</span><span data-stage="reading">Đọc nội dung</span><span data-stage="classifying">Ghép thông tin</span></div></div>
+      <div class="fields" id="fields">
+        <div class="field-card" data-label="SELLER"><div class="field-header"><button class="field-label" type="button" data-focus="SELLER"><span class="field-dot seller"></span> TÊN CỬA HÀNG</button><span id="conf-SELLER" class="field-conf-badge">0%</span></div><textarea id="field-SELLER" rows="2" placeholder="Tên đơn vị bán hàng" aria-label="Tên cửa hàng" disabled maxlength="4000"></textarea></div>
+        <div class="field-card" data-label="ADDRESS"><div class="field-header"><button class="field-label" type="button" data-focus="ADDRESS"><span class="field-dot address"></span> ĐỊA CHỈ</button><span id="conf-ADDRESS" class="field-conf-badge">0%</span></div><textarea id="field-ADDRESS" rows="2" placeholder="Địa chỉ trên hóa đơn" aria-label="Địa chỉ" disabled maxlength="4000"></textarea></div>
+        <div class="field-card" data-label="TIMESTAMP"><div class="field-header"><button class="field-label" type="button" data-focus="TIMESTAMP"><span class="field-dot timestamp"></span> NGÀY / GIỜ</button><span id="conf-TIMESTAMP" class="field-conf-badge">0%</span></div><textarea id="field-TIMESTAMP" rows="1" placeholder="Thời điểm giao dịch" aria-label="Ngày giờ" disabled maxlength="4000"></textarea></div>
+        <div class="field-card" data-label="TOTAL_COST"><div class="field-header"><button class="field-label" type="button" data-focus="TOTAL_COST"><span class="field-dot total"></span> TỔNG TIỀN</button><span id="conf-TOTAL_COST" class="field-conf-badge">0%</span></div><textarea id="field-TOTAL_COST" rows="1" placeholder="Giá trị thanh toán" aria-label="Tổng tiền" disabled maxlength="4000"></textarea></div>
+      </div>
+      <div id="result-note" class="result-note"><svg><use href="#i-check"/></svg><span>Bạn có thể kiểm tra và sửa kết quả trước khi xuất.</span></div>
+      <div class="export-area"><div class="export-copy"><span class="step">03</span><div><strong>Sẵn sàng cho bảng tính</strong><span>Thông tin hóa đơn & chi tiết từng vùng chữ</span></div></div><button id="export-button" class="button export-button" disabled><svg><use href="#i-download"/></svg> Xuất Excel <span>.xlsx</span></button></div>
+    </div>
+  </section>
+
+  <section id="regions-section" class="regions-section" hidden><div class="regions-heading"><div><div class="eyebrow">ĐỐI CHIẾU VỚI ẢNH GỐC</div><h2>Từng vùng chữ, từng chi tiết.</h2><p class="region-explanation">Nhãn gợi ý có thể sai. Chỉ các vùng được chọn mới góp vào bốn trường kết quả.</p></div><button id="clear-focus" class="text-button">Hiện tất cả các trường</button></div><div class="table-wrap"><table><thead><tr><th>VÙNG</th><th>NỘI DUNG NHẬN DẠNG</th><th>NHÃN GỢI Ý</th><th>ĐỘ TIN CẬY OCR</th></tr></thead><tbody id="regions-body"></tbody></table></div></section>
+  <footer><span><svg><use href="#i-shield"/></svg> Ảnh được xử lý và lưu trên máy chạy demo.</span><span>Invoice Studio <span class="footer-separator">/</span> Vietnamese receipt recognition</span></footer>
+</main>
+</body>
+</html>

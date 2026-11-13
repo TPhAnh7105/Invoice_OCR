@@ -1,0 +1,17 @@
+# Reuse the existing notebook environment and its CUDA-enabled PyTorch.
+fastapi>=0.115,<1
+pydantic>=2.7,<3
+uvicorn>=0.30,<1
+python-multipart>=0.0.18
+openpyxl>=3.1,<4
+pillow>=10
+numpy
+opencv-python
+torch
+torchvision
+transformers>=4.40,<5
+PyYAML
+pyclipper
+# Only needed for local verification:
+httpx
+pytest
